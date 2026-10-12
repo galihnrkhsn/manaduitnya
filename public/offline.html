@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koneksi Terputus</title>
+    <!-- Anda bisa menyematkan CSS langsung agar tetap berjalan meski offline -->
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .btn-retry {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-retry:active {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon">✈️</div>
+    <h1>Anda Sedang Offline</h1>
+    <p>Aplikasi keuangan membutuhkan koneksi internet untuk melakukan pencatatan. Silakan periksa koneksi Wi-Fi atau data seluler Anda.</p>
+    <button class="btn-retry" onclick="window.location.reload()">Coba Lagi</button>
+</body>
+</html>
