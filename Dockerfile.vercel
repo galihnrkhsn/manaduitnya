@@ -30,7 +30,7 @@ COPY . .
 COPY --from=dependencies /app/vendor ./vendor
 RUN npm run build
 
-# Image akhir
+# Image akhir (hanya menyalin hasil, tanpa Composer)
 FROM base AS runtime
 
 COPY --from=dependencies --chown=www-data:www-data /app /app
@@ -52,9 +52,3 @@ ENV PORT=80 \
 USER www-data
 
 CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
-
-COPY . .
-RUN rm -f bootstrap/cache/*.php \
-    && mkdir -p storage/framework/cache storage/framework/sessions \
-        storage/framework/views bootstrap/cache \
-    && composer dump-autoload --no-dev --classmap-authoritative
