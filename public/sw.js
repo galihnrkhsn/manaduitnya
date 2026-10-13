@@ -47,3 +47,25 @@ self.addEventListener('fetch', (e) => {
     );
   }
 });
+
+const CACHE = 'manaduitnya-v1';
+const PRECACHE = ['/offline.html', '/icons/mascot.png'];
+
+self.addEventListener('install', (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+});
+
+self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+
+  // Maskot: ambil dari cache dulu
+  if (url.pathname === '/icons/mascot.png') {
+    e.respondWith(caches.match(e.request).then((hit) => hit || fetch(e.request)));
+    return;
+  }
+
+  // Halaman: kalau offline, tampilkan offline.html
+  if (e.request.mode === 'navigate') {
+    e.respondWith(fetch(e.request).catch(() => caches.match('/offline.html')));
+  }
+});

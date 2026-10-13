@@ -46,4 +46,42 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function wallets() {
+        return $this->hasMany(Wallet::class);
+    }
+
+    public function categories() {
+        return $this->hasMany(Category::class);
+    }
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function budgets() {
+        return $this->hasMany(Budget::class);
+    }
+
+    public function setupDefaults(): void
+    {
+        $this->wallets()->create(['name' => 'Tunai']);
+
+        $categories = [
+            ['Makan & Minum', Transaction::EXPENSE, '#B45309'],
+            ['Transportasi',  Transaction::EXPENSE, '#0369A1'],
+            ['Tagihan',       Transaction::EXPENSE, '#475569'],
+            ['Belanja',       Transaction::EXPENSE, '#BE185D'],
+            ['Hiburan',       Transaction::EXPENSE, '#65A30D'],
+            ['Kesehatan',     Transaction::EXPENSE, '#15803D'],
+            ['Biaya Admin',   Transaction::EXPENSE, '#64748B'],
+            ['Lainnya',       Transaction::EXPENSE, '#94A3B8'],
+            ['Gaji',          Transaction::INCOME,  '#0D9488'],
+            ['Lainnya',       Transaction::INCOME,  '#14B8A6'],
+        ];
+
+        foreach ($categories as [$name, $type, $color]) {
+            $this->categories()->create(compact('name', 'type', 'color'));
+        }
+    }
 }
