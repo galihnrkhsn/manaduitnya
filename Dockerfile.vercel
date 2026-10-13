@@ -52,3 +52,9 @@ ENV PORT=80 \
 USER www-data
 
 CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
+
+COPY . .
+RUN rm -f bootstrap/cache/*.php \
+    && mkdir -p storage/framework/cache storage/framework/sessions \
+        storage/framework/views bootstrap/cache \
+    && composer dump-autoload --no-dev --classmap-authoritative
