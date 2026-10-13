@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    /* Terasa seperti app native di iOS: tanpa kilatan abu-abu saat tap, tanpa delay double-tap */
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+    body {
+        touch-action: manipulation;
+    }
+}

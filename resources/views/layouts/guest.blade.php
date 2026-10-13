@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-        @include('partials.pwa-head')
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @include('partials.head')
     </head>
-    <body class="font-sans text-slate-900 antialiased">
-        <x-splash/>
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-slate-500" />
-                </a>
-            </div>
+    <body class="bg-surface font-sans text-ink antialiased md:bg-card">
+        <x-splash />
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+        {{-- Mobile: putih polos. Desktop: panel putih di atas latar abu muda. --}}
+        <div class="flex min-h-screen items-center justify-center px-6 py-10">
+            <div class="w-full max-w-sm md:rounded-lg md:bg-surface md:p-8 md:shadow-sm">
+                <a href="/" class="flex justify-center">
+                    <x-application-logo class="h-28 w-28 md:h-24 md:w-24" alt="" />
+                </a>
+
+                <div class="mt-6">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
     </body>
