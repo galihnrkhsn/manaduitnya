@@ -13,7 +13,9 @@ class Transaction extends Model
     public const EXPENSE  = 2;
     public const TRANSFER = 3;
 
-    protected $table = 'transactions';
+    protected $table        = 'transactions';
+    protected $primaryKey   = 'uuid';
+    protected $keyType      = 'string';
     protected $fillable = [
         'user_id',
         'wallet_id',
@@ -27,7 +29,7 @@ class Transaction extends Model
     protected $casts = [
         'type'              => 'integer',
         'amount'            => 'integer',
-        'transaction_date'  => 'date',
+        'transaction_date'  => 'datetime',
     ];
 
     public function wallet() {
