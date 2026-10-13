@@ -45,7 +45,7 @@ ENV PORT=80 \
     APP_DEBUG=false \
     LOG_CHANNEL=stderr \
     CACHE_STORE=database \
-    SESSION_DRIVER=database \
+    SESSION_DRIVER=cookie \
     SESSION_LIFETIME=525600 \
     QUEUE_CONNECTION=sync
 

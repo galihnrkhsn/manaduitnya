@@ -1,6 +1,6 @@
 import './bootstrap';
-
 import Alpine from 'alpinejs';
+import '@fontsource-variable/inter';
 
 window.Alpine = Alpine;
 
