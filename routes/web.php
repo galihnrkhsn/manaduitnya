@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
-use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect()->route('dashboard'));
@@ -30,8 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-})->withMiddleware(function (Middleware $middleware): void {
-    $middleware->trustProxies(at: '*');
 });
 
 require __DIR__.'/auth.php';
