@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetC;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -17,11 +18,14 @@ Route::middleware('auth')->group(function () {
         Route::get('money', [TransactionController::class, 'money'])->name('money');
     });
 
-    Route::group(['prefix' => 'bugdet', 'as' => 'budgets.'], function () {
-        Route::get('', [TransactionController::class, 'index'])->name('index');
-        Route::get('create', [TransactionController::class, 'create'])->name('create');
-        Route::get('show', [TransactionController::class, 'show'])->name('show');
-        Route::post('store', [TransactionController::class, 'store'])->name('store');
+    Route::group(['prefix' => 'budgets', 'as' => 'budgets.'], function () {
+        Route::get('', [BudgetC::class, 'index'])->name('index');
+        Route::get('create', [BudgetC::class, 'create'])->name('create');
+        Route::get('edit/{budget}', [BudgetC::class, 'edit'])->name('edit');
+        Route::get('show', [BudgetC::class, 'show'])->name('show');
+        Route::post('store', [BudgetC::class, 'store'])->name('store');
+        Route::put('update', [BudgetC::class, 'update'])->name('update');
+        Route::delete('destroy', [BudgetC::class, 'destroy'])->name('destroy');
     });
 
     Route::get('more', [TransactionController::class, 'index'])->name('more');

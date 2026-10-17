@@ -6,23 +6,7 @@
     @endif
 
     {{-- Pilih bulan --}}
-    <div class="flex items-center justify-between">
-        <a href="{{ route('transactions.index', ['month' => $month->copy()->subMonth()->format('Y-m'), 'type' => $type]) }}"
-           aria-label="Bulan sebelumnya"
-           class="flex h-11 w-11 items-center justify-center rounded-md text-ink/70 hover:bg-card transition">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-        </a>
-        <h2 class="text-base font-semibold">{{ $month->translatedFormat('F Y') }}</h2>
-        <a href="{{ route('transactions.index', ['month' => $month->copy()->addMonth()->format('Y-m'), 'type' => $type]) }}"
-           aria-label="Bulan berikutnya"
-           class="flex h-11 w-11 items-center justify-center rounded-md text-ink/70 hover:bg-card transition">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-        </a>
-    </div>
+    <x-month-selector :month="$month" route-name="transactions.index" />
 
     {{-- Ringkasan bulan --}}
     @php

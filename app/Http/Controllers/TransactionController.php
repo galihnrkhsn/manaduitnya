@@ -78,7 +78,6 @@ class TransactionController extends Controller
         abort_unless((int) $transaction->user_id === (int) $request->user()->id, 404);
     }
 
-    /** Kembali ke daftar di bulan transaksi tadi, supaya hasilnya langsung terlihat. */
     private function backToList(Transaction $transaction, string $message)
     {
         return redirect()
@@ -86,7 +85,6 @@ class TransactionController extends Controller
             ->with('status', $message);
     }
 
-    /** Dompet & kategori untuk form. Yang diarsipkan disembunyikan, kecuali masih dipakai transaksi ini. */
     private function formData(Request $request, Transaction $transaction): array
     {
         $userId = $request->user()->id;

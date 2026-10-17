@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     protected $table = 'budgets';
+    protected $guarded = [];
     protected $fillable = [
         'category_id',
         'month',
-        'amount'
+        'amount',
+        'user_id'
     ];
 
     protected $casts = [
