@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BudgetC;
+use App\Http\Controllers\DashboardC;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => redirect()->route('dashboard'));
 
 Route::middleware('auth')->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', [DashboardC::class, 'index'])->name('dashboard');
     Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
         Route::get('', [TransactionController::class, 'index'])->name('index');
         Route::get('create', [TransactionController::class, 'create'])->name('create');

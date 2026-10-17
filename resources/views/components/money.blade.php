@@ -1,4 +1,4 @@
-@props(['value', 'type', 'sign' => true])
+@props(['value', 'type' => 3, 'sign' => true])
 
 {{-- type: 1 pemasukan (hijau, +), 2 pengeluaran (merah, -), 3 transfer (netral) --}}
 @php
