@@ -8,9 +8,10 @@ Route::get('/', fn () => redirect()->route('dashboard'));
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::group(['prefix' => 'transaksi', 'as' => 'transactions.'], function () {
+    Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
         Route::get('', [TransactionController::class, 'index'])->name('index');
         Route::get('create', [TransactionController::class, 'create'])->name('create');
+        Route::get('edit', [TransactionController::class, 'edit'])->name('edit');
         Route::get('show', [TransactionController::class, 'show'])->name('show');
         Route::post('store', [TransactionController::class, 'store'])->name('store');
         Route::get('money', [TransactionController::class, 'money'])->name('money');

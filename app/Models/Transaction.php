@@ -16,6 +16,7 @@ class Transaction extends Model
     protected $table        = 'transactions';
     protected $primaryKey   = 'uuid';
     protected $keyType      = 'string';
+    protected $guarded = [];
     protected $fillable = [
         'user_id',
         'wallet_id',
