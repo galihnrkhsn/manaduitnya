@@ -28,4 +28,16 @@ class ProfileUpdateRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required'   => 'Nama wajib diisi.',
+            'name.max'        => 'Nama maksimal 255 karakter.',
+            'email.required'  => 'Email wajib diisi.',
+            'email.email'     => 'Format email tidak valid.',
+            'email.lowercase' => 'Email harus huruf kecil semua.',
+            'email.unique'    => 'Email ini sudah dipakai akun lain.',
+        ];
+    }
 }

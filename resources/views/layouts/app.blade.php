@@ -12,7 +12,7 @@
              'icon' => ['M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z']],
             ['label' => 'Budget', 'route' => 'budgets.index', 'match' => ['budgets.*'],
              'icon' => ['M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z', 'M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z']],
-            ['label' => 'Lainnya', 'route' => 'more', 'match' => ['more', 'profile.*'],
+            ['label' => 'Lainnya', 'route' => 'more', 'match' => ['more', 'profile.*', 'wallets.*', 'categories.*'],
              'icon' => ['M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z']],
         ];
     @endphp
@@ -59,6 +59,12 @@
                 @isset($header)
                     <h1 class="mb-5 text-xl font-semibold md:text-2xl">{{ $header }}</h1>
                 @endisset
+
+                @if (session('status'))
+                    <div class="mb-4 rounded-md border border-teal-200 bg-teal-50 px-4 py-2 text-sm text-teal-800">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
                 {{ $slot }}
             </main>

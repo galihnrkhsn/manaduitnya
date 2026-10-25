@@ -15,7 +15,7 @@
                 }, 15000);
             }
          }">
-        <h1 class="text-xl font-bold text-ink">Halo, {{ auth()->user()->name }}! 👋</h1>
+        <h1 class="text-xl font-bold text-ink">Halo, {{ auth()->user()->name }}!</h1>
         {{-- Animasi fade tipis saat teks berganti --}}
         <p class="mt-1 min-h-[40px] text-sm font-medium text-ink/60 transition-opacity duration-500" x-text="currentQuote"></p>
     </div>

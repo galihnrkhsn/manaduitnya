@@ -93,4 +93,36 @@ class User extends Authenticatable
             get: fn ($value) => ucwords(strtolower($value ?? '')),
         );
     }
+
+    public function walletsWithBalance()
+    {
+        $wallets = $this->wallets()->active()->orderBy('name')->get();
+
+        // total per dompet per jenis transaksi
+        $totals = $this->transactions()
+            ->selectRaw('wallet_id, type, SUM(amount) AS total')
+            ->groupBy('wallet_id', 'type')
+            ->get()
+            ->groupBy('wallet_id');
+
+        // total transfer yang masuk ke tiap dompet
+        $incoming = $this->transactions()
+            ->where('type', Transaction::TRANSFER)
+            ->selectRaw('to_wallet_id, SUM(amount) AS total')
+            ->groupBy('to_wallet_id')
+            ->pluck('total', 'to_wallet_id');
+
+        foreach ($wallets as $wallet) {
+            $rows = $totals->get($wallet->id, collect());
+            $sum = fn (int $type) => (int) $rows->firstWhere('type', $type)?->total;
+
+            $wallet->current_balance = $wallet->initial_balance
+                + $sum(Transaction::INCOME)
+                - $sum(Transaction::EXPENSE)
+                - $sum(Transaction::TRANSFER)
+                + (int) $incoming->get($wallet->id, 0);
+        }
+
+        return $wallets;
+    }
 }

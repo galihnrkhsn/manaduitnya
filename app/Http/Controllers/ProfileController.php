@@ -14,47 +14,44 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('profile.edit');
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->user()->update($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.edit')->with('status', 'Profil diperbarui.');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
+        ], [
+            'password.required'         => 'Password wajib diisi.',
+            'password.current_password' => 'Password salah.',
         ]);
 
         $user = $request->user();
 
         Auth::logout();
 
-        $user->delete();
+        // Urutan penting: dompet dan kategori dilindungi RESTRICT,
+        // jadi transaksi harus dihapus lebih dulu
+        DB::transaction(function () use ($user) {
+            $user->transactions()->delete();
+            $user->budgets()->delete();
+            $user->wallets()->delete();
+            $user->categories()->delete();
+            $user->delete();
+        });
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return redirect('/');
     }
 }

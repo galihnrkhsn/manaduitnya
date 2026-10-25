@@ -1,55 +1,30 @@
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-slate-900">
-            {{ __('Delete Account') }}
-        </h2>
+<section class="mt-8 border-t border-slate-200 pt-8">
+    <h2 class="text-base font-semibold text-red-700">Hapus akun</h2>
+    <p class="mt-1 text-sm text-slate-500">
+        Semua data (dompet, kategori, transaksi, budget) dihapus permanen dan tidak bisa dikembalikan.
+    </p>
 
-        <p class="mt-1 text-sm text-slate-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
-        </p>
-    </header>
+    <details class="mt-4" @if ($errors->userDeletion->isNotEmpty()) open @endif>
+        <summary class="cursor-pointer text-sm font-medium text-red-700 hover:underline">
+            Saya ingin menghapus akun
+        </summary>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
-
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        <form method="POST" action="{{ route('profile.destroy') }}" class="mt-4 space-y-4"
+              onsubmit="return confirm('Hapus akun beserta semua datanya secara permanen?')">
             @csrf
-            @method('delete')
+            @method('DELETE')
 
-            <h2 class="text-lg font-medium text-slate-900">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
-
-            <p class="mt-1 text-sm text-slate-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </p>
-
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
-
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+            <div>
+                <x-input-label for="delete_password" value="Masukkan password untuk konfirmasi" />
+                <x-text-input id="delete_password" name="password" type="password"
+                              class="mt-1 block w-full" autocomplete="current-password" />
+                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-1" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
-            </div>
+            <button type="submit"
+                    class="rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+                Hapus akun permanen
+            </button>
         </form>
-    </x-modal>
+    </details>
 </section>
