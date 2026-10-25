@@ -10,3 +10,12 @@ Alpine.start();
 if ('serviceWorker' in navigator) {
     registerSW({ immediate: true });
 }
+
+const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+if (isStandalone) {
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.closest('a, button, nav')) e.preventDefault();
+    });
+}

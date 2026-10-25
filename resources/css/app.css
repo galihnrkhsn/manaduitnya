@@ -16,4 +16,24 @@
     [x-cloak] {
         display: none !important;
     }
+
+    /* Matikan menu tekan-lama ("Open in New Tab", pratinjau link) */
+    a,
+    button,
+    img {
+        -webkit-touch-callout: none;
+    }
+
+    /* Hilangkan kilatan abu-abu saat link atau tombol disentuh */
+    a,
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Navigasi tidak perlu bisa diseleksi teksnya */
+    nav,
+    aside {
+        -webkit-user-select: none;
+        user-select: none;
+    }
 }
