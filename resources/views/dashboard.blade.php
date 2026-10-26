@@ -27,20 +27,54 @@
             <x-money :value="$data['totalBalance']" :sign="false" class="!text-ink" />
         </p>
 
-        <div class="-mx-4 mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:px-0">
+        @php $total = (float) $data['totalBalance']; @endphp
+
+        <div class="-mx-4 mt-5 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:scroll-px-0 md:px-0">
             @foreach ($data['wallets'] as $wallet)
-                <div class="min-w-[140px] shrink-0 snap-start rounded-xl bg-brand p-4 text-white shadow-md">
-                    <p class="truncate text-xs font-medium text-white/80">{{ $wallet->name }}</p>
-                    <p class="mt-1 truncate text-lg font-bold">Rp {{ number_format($wallet->balance, 0, ',', '.') }}</p>
+                @php
+                    $pct = $total > 0 ? max(0, min(100, round($wallet->balance / $total * 100))) : 0;
+                @endphp
+
+                <div class="flex min-w-[290px] shrink-0 snap-start items-center justify-between gap-3 rounded-2xl bg-brand p-4 shadow-sm">
+                    {{-- Kiri: ikon + label, nama dompet, saldo --}}
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white text-green-700">
+                                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium text-ink/70">Dompet</span>
+                        </div>
+
+                        <p class="mt-3 truncate text-lg font-bold leading-tight text-ink">{{ $wallet->name }}</p>
+                        <p class="mt-0.5 truncate text-xs font-semibold text-ink/60">
+                            Rp {{ number_format($wallet->balance, 0, ',', '.') }}
+                        </p>
+                    </div>
+
+                    {{-- Kanan: ring progress --}}
+                    <div class="relative h-20 w-20 shrink-0">
+                        <svg class="h-full w-full -rotate-90" viewBox="0 0 80 80">
+                            <circle cx="40" cy="40" r="32" fill="none" stroke="white" stroke-opacity="0.7" stroke-width="8" />
+                            <circle cx="40" cy="40" r="32" fill="none" stroke="#15803d" stroke-width="8"
+                                    stroke-linecap="round" pathLength="100"
+                                    stroke-dasharray="{{ $pct }} 100" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-lg font-bold leading-none text-ink">{{ $pct }}%</span>
+                            <span class="mt-0.5 text-[10px] font-medium text-ink/60">saldo</span>
+                        </div>
+                    </div>
                 </div>
             @endforeach
+
             {{-- Kartu Tambah Dompet --}}
-            <div class="flex min-w-[100px] shrink-0 snap-start items-center justify-center rounded-xl border-2 border-dashed border-ink/20 bg-surface p-4">
-                <span class="text-xs font-semibold text-ink/50">+ Dompet</span>
+            <div class="flex min-w-[100px] shrink-0 snap-start items-center justify-center rounded-2xl border-2 border-dashed border-ink/20 bg-surface p-4">
+                <a class="text-xs font-semibold text-ink/50" href="{{ route('wallets.create') }}">+ Dompet</a>
             </div>
         </div>
     </div>
-
     {{-- Section 3: Ringkasan Bulan Ini --}}
     <div class="mb-8 grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-ink/10 bg-card p-4 shadow-sm">
