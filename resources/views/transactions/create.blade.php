@@ -44,19 +44,21 @@
             </div>
 
             <!-- Kategori (Sembunyikan jika Transfer) -->
-            <div x-show="type !== 3">
+            <div x-show="type !== 3" x-cloak>
                 <label class="block text-sm font-medium text-ink/80">Kategori</label>
-                <select name="category_id" class="mt-1 block w-full rounded-lg border-ink/20 bg-surface px-3 py-2">
-                    <option value="">Pilih Kategori...</option>
-                    <!-- Logika template Blade untuk menampilkan kategori sesuai tipe -->
-                    @foreach($categories as $catType => $cats)
-                        <optgroup label="{{ $catType == 1 ? 'Pemasukan' : 'Pengeluaran' }}" x-show="type === {{ $catType }}">
-                            @foreach($cats as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                            @endforeach
-                        </optgroup>
-                    @endforeach
-                </select>
+
+                @foreach($categories as $catType => $cats)
+                    <select name="category_id"
+                            x-show="type === {{ $catType }}"
+                            :disabled="type !== {{ $catType }}"
+                            x-cloak
+                            class="mt-1 block w-full rounded-lg border-ink/20 bg-surface px-3 py-2">
+                        <option value="">Pilih Kategori...</option>
+                        @foreach($cats as $cat)
+                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                @endforeach
             </div>
 
             <!-- Catatan / Note -->
