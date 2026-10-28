@@ -1,10 +1,5 @@
 <x-app-layout>
     <x-slot name="header">Transaksi</x-slot>
-
-    @if (session('status'))
-        <div class="mb-4 rounded-md bg-card px-4 py-3 text-sm font-medium text-brand-dark">{{ session('status') }}</div>
-    @endif
-
     {{-- Pilih bulan --}}
     <x-month-selector :month="$month" route-name="transactions.index" />
 

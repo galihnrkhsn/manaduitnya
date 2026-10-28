@@ -15,10 +15,12 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
         Route::get('', [TransactionController::class, 'index'])->name('index');
         Route::get('create', [TransactionController::class, 'create'])->name('create');
-        Route::get('edit', [TransactionController::class, 'edit'])->name('edit');
-        Route::get('show', [TransactionController::class, 'show'])->name('show');
-        Route::post('store', [TransactionController::class, 'store'])->name('store');
         Route::get('money', [TransactionController::class, 'money'])->name('money');
+        Route::post('store', [TransactionController::class, 'store'])->name('store');
+        Route::get('{transaction}', [TransactionController::class, 'show'])->whereUuid('transaction')->name('show');
+        Route::get('{transaction}/edit', [TransactionController::class, 'edit'])->whereUuid('transaction')->name('edit');
+        Route::put('{transaction}', [TransactionController::class, 'update'])->whereUuid('transaction')->name('update');
+        Route::delete('{transaction}', [TransactionController::class, 'destroy'])->whereUuid('transaction')->name('destroy');
     });
 
     Route::group(['prefix' => 'budgets', 'as' => 'budgets.'], function () {
@@ -28,7 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::get('show', [BudgetC::class, 'show'])->name('show');
         Route::post('store', [BudgetC::class, 'store'])->name('store');
         Route::put('update', [BudgetC::class, 'update'])->name('update');
-        Route::delete('destroy', [BudgetC::class, 'destroy'])->name('destroy');
+        Route::delete('destroy/{budget}', [BudgetC::class, 'destroy'])->name('destroy');
     });
 
     Route::view('/more', 'more')->name('more');
