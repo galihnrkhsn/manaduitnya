@@ -103,7 +103,7 @@
                                 <div class="shrink-0 text-right">
                                     <x-money :value="$t->amount" :type="$t->type" class="block text-sm font-bold" />
                                     <p class="max-w-[11rem] truncate text-[11px] font-medium text-ink/50 mt-0.5">
-                                        {{ $t->type === 3 ? $t->wallet->name.' → '.$t->toWallet->name : $t->wallet->name }}
+                                        {{ $t->type === 3 ? $t->wallet->name . " → " . $t->toWallet->name : $t->wallet->name }}
                                     </p>
                                 </div>
                             </a>

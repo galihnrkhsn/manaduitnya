@@ -24,7 +24,8 @@ class Transaction extends Model
         'type',
         'amount',
         'note',
-        'transaction_date'
+        'transaction_date',
+        'to_wallet_id'
     ];
 
     protected $casts = [
