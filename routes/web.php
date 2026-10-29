@@ -38,11 +38,15 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'wallets', 'as' => 'wallets.'], function () {
         Route::get('', [WalletController::class, 'index'])->name('index');
         Route::get('create', [WalletController::class, 'create'])->name('create');
-        Route::get('edit/{wallet}', [WalletController::class, 'edit'])->name('edit');
         Route::post('store', [WalletController::class, 'store'])->name('store');
-        Route::put('update', [WalletController::class, 'update'])->name('update');
-        Route::delete('destroy', [WalletController::class, 'destroy'])->name('destroy');
         Route::patch('restore', [WalletController::class, 'restore'])->name('restore');
+        // Route::get('edit/{wallet}', [WalletController::class, 'edit'])->name('edit');
+        // Route::put('update', [WalletController::class, 'update'])->name('update');
+        // Route::delete('destroy', [WalletController::class, 'destroy'])->name('destroy');
+        // Route::get('{wallet}', [WalletController::class, 'show'])->whereUuid('wallet')->name('show');
+        Route::get('{wallet}/edit', [WalletController::class, 'edit'])->name('edit');
+        Route::put('{wallet}', [WalletController::class, 'update'])->name('update');
+        Route::delete('{wallet}', [WalletController::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {

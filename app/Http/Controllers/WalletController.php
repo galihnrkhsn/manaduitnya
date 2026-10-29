@@ -30,17 +30,17 @@ class WalletController extends Controller
         return redirect()->route('wallets.index')->with('status', 'Dompet ditambahkan.');
     }
 
-    public function edit(Wallet $wallet)
+    public function edit(Request $request, Wallet $wallet)
     {
-        $this->own($wallet);
+        $this->own($request, $wallet);
 
         return view('wallets.form', compact('wallet'));
     }
 
     public function update(Request $request, Wallet $wallet)
     {
-        $this->own($wallet);
-        $wallet->update($this->validated($request, $wallet));
+        $this->own($request, $wallet);
+        $wallet->update($request->toArray());
 
         return redirect()->route('wallets.index')->with('status', 'Dompet diperbarui.');
     }
@@ -48,7 +48,7 @@ class WalletController extends Controller
     // "Hapus" berarti arsipkan, supaya riwayat transaksi tetap utuh
     public function destroy(Request $request, Wallet $wallet)
     {
-        $this->own($wallet);
+        $this->own($request, $wallet);
 
         if ($request->user()->wallets()->active()->count() <= 1) {
             return back()->withErrors(['wallet' => 'Minimal harus ada satu dompet aktif.']);
@@ -60,9 +60,9 @@ class WalletController extends Controller
         return redirect()->route('wallets.index')->with('status', 'Dompet diarsipkan.');
     }
 
-    public function restore(Wallet $wallet)
+    public function restore(Request $request, Wallet $wallet)
     {
-        $this->own($wallet);
+        $this->own($request, $wallet);
 
         $wallet->archived_at = null;
         $wallet->save();
@@ -71,9 +71,9 @@ class WalletController extends Controller
     }
 
     // Dompet milik user lain dianggap tidak ada
-    private function own(Wallet $wallet): void
+    private function own(Request $request, Wallet $wallet): void
     {
-        abort_unless($wallet->user_id === auth()->id(), 404);
+        abort_unless((int) $wallet->user_id === (int) $request->user()->id, 404);
     }
 
     private function validated(Request $request, ?Wallet $wallet = null): array
@@ -90,7 +90,7 @@ class WalletController extends Controller
         ], [
             'name.required'            => 'Nama dompet wajib diisi.',
             'name.max'                 => 'Nama dompet maksimal 50 karakter.',
-            'name.unique'              => 'Nama dompet ini sudah dipakai.',
+            // 'name.unique'              => 'Nama dompet ini sudah dipakai.',
             'initial_balance.required' => 'Saldo awal wajib diisi (isi 0 kalau kosong).',
             'initial_balance.integer'  => 'Saldo awal harus berupa angka.',
             'initial_balance.min'      => 'Saldo awal tidak boleh negatif.',

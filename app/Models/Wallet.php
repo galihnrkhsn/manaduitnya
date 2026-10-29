@@ -9,8 +9,8 @@ class Wallet extends Model
     protected $table = 'wallets';
     protected $fillable = [
         'name',
-        'initial_balance
-    '];
+        'initial_balance'
+    ];
     protected $casts = [
         'initial_balance'   => 'integer',
         'archived_at'       => 'datetime'

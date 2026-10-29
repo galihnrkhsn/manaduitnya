@@ -17,11 +17,10 @@
             <input type="hidden" name="type" x-model="type">
 
             <!-- Nominal -->
-            <div>
-                <label class="block text-sm font-medium text-ink/80">Nominal</label>
-                <input type="number" name="amount" required class="mt-1 block w-full rounded-lg border-ink/20 bg-surface px-3 py-2">
+            <x-input-label for="amount" value="Nominal" />
+            <div class="mt-1">
+                <x-money-input name="amount"/>
             </div>
-
             <!-- Dompet Asal -->
             <div>
                 <label class="block text-sm font-medium text-ink/80" x-text="type === 3 ? 'Dari Dompet' : 'Dompet'"></label>
