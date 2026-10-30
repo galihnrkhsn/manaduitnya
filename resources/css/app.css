@@ -36,4 +36,14 @@
         -webkit-user-select: none;
         user-select: none;
     }
+
+    input, select, textarea {
+        font-size: 16px;
+    }
+
+    @media (min-width: 640px) {
+        input, select, textarea {
+            font-size: 0.875rem; /* kembali ke text-sm di desktop */
+        }
+    }
 }
