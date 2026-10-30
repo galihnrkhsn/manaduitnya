@@ -54,7 +54,7 @@
                     $dash = $pct / 100 * $circumference;
                 @endphp
 
-                <div class="flex min-w-[290px] shrink-0 snap-start items-center justify-between gap-3 rounded-2xl p-4 shadow-sm {{ $theme['card'] }}">
+                <a href="{{ route('wallets.show', $wallet->id) }}" class="flex min-w-[290px] shrink-0 snap-start items-center justify-between gap-3 rounded-2xl p-4 shadow-sm transition active:scale-[0.98] {{ $theme['card'] }}">
                     {{-- Kiri: ikon + label, nama dompet, saldo --}}
                     <div class="min-w-0 flex-1">
                         <div class="flex items-center gap-2">
@@ -87,7 +87,7 @@
                             <span class="mt-0.5 text-[10px] font-medium text-ink/60">dari total</span>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
 
             {{-- Kartu Tambah Dompet --}}

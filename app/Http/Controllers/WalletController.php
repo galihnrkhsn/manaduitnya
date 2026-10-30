@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -68,6 +69,42 @@ class WalletController extends Controller
         $wallet->save();
 
         return redirect()->route('wallets.index')->with('status', 'Dompet dipulihkan.');
+    }
+
+    public function show(Request $request, int $wallet)
+    {
+        $wallet = Wallet::where('user_id', $request->user()->id)->findOrFail($wallet);
+
+        $transactions = Transaction::with(['category', 'wallet', 'toWallet'])
+            ->where(function ($q) use ($wallet) {
+                $q->where('wallet_id', $wallet->id)
+                    ->orWhere('to_wallet_id', $wallet->id);
+            })
+            ->orderByDesc('transaction_date')
+            ->paginate(30);
+
+        $groups = $transactions->getCollection()
+            ->groupBy(fn ($t) => $t->transaction_date->format('Y-m-d'));
+
+        $id     = $wallet->id;
+        $sum    = Transaction::where(function ($q) use ($id) {
+                $q->where('wallet_id', $id)->orWhere('to_wallet_id', $id);
+            })
+            ->selectRaw('
+                COALESCE(SUM(CASE WHEN wallet_id = ?    AND type = 1 THEN amount END), 0) AS income,
+                COALESCE(SUM(CASE WHEN wallet_id = ?    AND type = 2 THEN amount END), 0) AS expense,
+                COALESCE(SUM(CASE WHEN wallet_id = ?    AND type = 3 THEN amount END), 0) AS transfer_out,
+                COALESCE(SUM(CASE WHEN to_wallet_id = ? AND type = 3 THEN amount END), 0) AS transfer_in
+            ', [$id, $id, $id, $id])
+            ->first();
+
+        $balance = (float) ($wallet->initial_balance ?? 0)
+            + (float) $sum->income
+            - (float) $sum->expense
+            - (float) $sum->transfer_out
+            + (float) $sum->transfer_in;
+
+        return view('wallets.show', compact('wallet', 'transactions', 'groups', 'balance'));
     }
 
     // Dompet milik user lain dianggap tidak ada

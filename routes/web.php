@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('edit/{wallet}', [WalletController::class, 'edit'])->name('edit');
         // Route::put('update', [WalletController::class, 'update'])->name('update');
         // Route::delete('destroy', [WalletController::class, 'destroy'])->name('destroy');
-        // Route::get('{wallet}', [WalletController::class, 'show'])->whereUuid('wallet')->name('show');
+        Route::get('{wallet}/show', [WalletController::class, 'show'])->name('show');
         Route::get('{wallet}/edit', [WalletController::class, 'edit'])->name('edit');
         Route::put('{wallet}', [WalletController::class, 'update'])->name('update');
         Route::delete('{wallet}', [WalletController::class, 'destroy'])->name('destroy');
