@@ -14,6 +14,6 @@
 >
     <span class="pl-3 text-sm text-slate-500">Rp</span>
     <input id="{{ $name }}" type="text" inputmode="numeric" autocomplete="off" x-model="display"
-           class="w-full border-0 bg-transparent px-2 py-2 text-sm tabular-nums focus:ring-0 sm:text-sm">
+           class="w-full border-0 bg-transparent px-2 py-2 text-base tabular-nums focus:ring-0 sm:text-sm">
     <input type="hidden" name="{{ $name }}" :value="raw">
 </div>
