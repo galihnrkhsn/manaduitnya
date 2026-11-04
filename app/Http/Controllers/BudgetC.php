@@ -93,7 +93,7 @@ class BudgetC extends Controller
     }
 
     public function update(Request $request, Budget $budget) {
-        if ($budget->user_id !== $request->user()->id) abort(403);
+        abort_unless((int) $budget->user_id === (int) $request->user()->id, 404);
 
         $validated = $request->validate([
             'amount'    => 'bail|required|integer|min:0'
@@ -103,7 +103,7 @@ class BudgetC extends Controller
             'amount'    => $validated['amount']
         ]);
 
-        return redirect()->route('budgets.index', compact(['month' => Carbon::parse($budget->month)->format('Y-m-d')]))
+        return redirect()->route('budgets.index', ['month' => $budget->month->format('Y-m-d')])
             ->with('status', 'Anggaran Berhasil diperbarui');
     }
 

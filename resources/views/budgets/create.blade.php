@@ -51,8 +51,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-ink/80">Batas Anggaran (Rp)</label>
-                <input type="number" name="amount" value="{{ old('amount') }}" required min="0"
-                       class="mt-1 block w-full rounded-lg border-ink/20 bg-surface px-3 py-2" placeholder="Contoh: 500000">
+                <x-money-input name="amount" value="{{ old('amount') }}"/>
                 <x-input-error :messages="$errors->get('amount')" />
             </div>
 

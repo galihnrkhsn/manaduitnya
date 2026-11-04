@@ -26,11 +26,16 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'budgets', 'as' => 'budgets.'], function () {
         Route::get('', [BudgetC::class, 'index'])->name('index');
         Route::get('create', [BudgetC::class, 'create'])->name('create');
-        Route::get('edit/{budget}', [BudgetC::class, 'edit'])->name('edit');
-        Route::get('show', [BudgetC::class, 'show'])->name('show');
         Route::post('store', [BudgetC::class, 'store'])->name('store');
-        Route::put('update', [BudgetC::class, 'update'])->name('update');
-        Route::delete('destroy/{budget}', [BudgetC::class, 'destroy'])->name('destroy');
+        // Route::get('edit/{budget}', [BudgetC::class, 'edit'])->name('edit');
+        // Route::get('show', [BudgetC::class, 'show'])->name('show');
+        // Route::put('{wallet}', [BudgetC::class, 'update'])->name('update');
+        // Route::delete('destroy/{budget}', [BudgetC::class, 'destroy'])->name('destroy');
+        Route::get('{budget}/show', [BudgetC::class, 'show'])->name('show');
+        Route::get('{budget}/edit', [BudgetC::class, 'edit'])->name('edit');
+        Route::put('{budget}', [BudgetC::class, 'update'])->name('update');
+        Route::delete('{budget}', [BudgetC::class, 'destroy'])->name('destroy');
+
     });
 
     Route::view('/more', 'more')->name('more');
