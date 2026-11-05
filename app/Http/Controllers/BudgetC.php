@@ -89,6 +89,7 @@ class BudgetC extends Controller
         if ($budget->user_id !== auth()->user()->id) abort(403);
 
         $budget->load('category');
+
         return view('budgets.edit', compact('budget'));
     }
 

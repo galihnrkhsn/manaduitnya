@@ -54,7 +54,7 @@
 
                 <li>
                     {{-- Klik card untuk mengedit anggaran --}}
-                    <a href="{{ route('budgets.edit', $budget->id) }}" class="block rounded-xl border border-ink/10 bg-card p-4 shadow-sm transition hover:bg-surface">
+                    <a href="{{ route('budgets.edit', $budget->uuid) }}" class="block rounded-xl border border-ink/10 bg-card p-4 shadow-sm transition hover:bg-surface">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <span class="h-3 w-3 shrink-0 rounded-full" style="background-color: {{ $budget->category->color }}"></span>

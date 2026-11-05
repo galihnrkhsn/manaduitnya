@@ -8,6 +8,8 @@ class Budget extends Model
 {
     protected $table = 'budgets';
     protected $guarded = [];
+    protected $primaryKey = 'uuid';
+    protected $keyType = 'string';
     protected $fillable = [
         'category_id',
         'month',

@@ -22,7 +22,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-ink/80">Ubah Batas Anggaran (Rp)</label>
-                <x-money-input name="amount" value="{{ $budget->amount }}"/>
+                <x-money-input name="amount" value="{{ (int) $budget->amount }}"/>
             </div>
 
             <div class="pt-4">
